@@ -1,8 +1,10 @@
 # LegionLoader C2 - Endpoint and Firewall Sigma Rules
 
-Research context: [eSentire's blog](https://www.esentire.com/blog/romulus-clickfix-to-legionloader-and-warden-stealer-breaking-down-a-multi-stage-malware-intrusion) and adversarial infrastructure research. The indicators below were supplied by the contributor as associated with LegionLoader; their attribution and current activity have not been independently verified here
+Research context: [eSentire's blog](https://www.esentire.com/blog/romulus-clickfix-to-legionloader-and-warden-stealer-breaking-down-a-multi-stage-malware-intrusion).
 
-## Endpoint Outbound Network Connections
+## Detection Rules
+
+### Endpoint Outbound Network Connections
 
 The supplied names are domains, not full URLs. This rule matches destination
 hostnames or the destination IP in endpoint network connection telemetry.
@@ -57,7 +59,7 @@ falsepositives:
 level: medium
 ```
 
-## Firewall Connections to the C2 IP
+### Firewall Connections to the C2 IP
 
 ```yaml
 title: Potential LegionLoader C2 IP Connection in Firewall Logs
