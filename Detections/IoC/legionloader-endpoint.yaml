@@ -1,0 +1,45 @@
+title: Potential LegionLoader C2 Outbound Endpoint Connection
+id: 6af08a73-207b-4aa3-93ea-e36875efca4c
+status: experimental
+description: Detects outbound endpoint network connections to contributor-supplied LegionLoader-associated domains, their subdomains, or IP address. Requires outbound initiation telemetry and hostnames rather than full URLs. Normalize terminal DNS dots during ingestion. A match does not establish infection or successful C2 communication.
+references:
+  - https://www.esentire.com/blog/romulus-clickfix-to-legionloader-and-warden-stealer-breaking-down-a-multi-stage-malware-intrusion
+author: Subhash Popuri (@pbssubhash)
+date: '2026-11-23'
+logsource:
+  category: network_connection
+detection:
+  selection_outbound:
+    Initiated: true
+  selection_domain:
+    DestinationHostname:
+      - 'benderoflight.com'
+      - 'dayafterfifty.com'
+      - 'feidaindy.com'
+      - 'redjaxfire.com'
+      - 'sdnrlre.com'
+      - 'toddloftindds.com'
+  selection_subdomain:
+    DestinationHostname|endswith:
+      - '.benderoflight.com'
+      - '.dayafterfifty.com'
+      - '.feidaindy.com'
+      - '.redjaxfire.com'
+      - '.sdnrlre.com'
+      - '.toddloftindds.com'
+  selection_ip:
+    DestinationIp: '109.238.86.137'
+  condition: selection_outbound and (selection_domain or selection_subdomain or selection_ip)
+fields:
+  - Computer
+  - User
+  - Image
+  - ProcessId
+  - SourceIp
+  - DestinationHostname
+  - DestinationIp
+  - DestinationPort
+falsepositives:
+  - Authorized malware analysis or security testing
+  - Shared or reassigned infrastructure
+level: medium

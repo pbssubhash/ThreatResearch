@@ -1,0 +1,23 @@
+title: Potential LegionLoader C2 IP Connection in Firewall Logs
+id: 8f729abb-c96d-4a4d-bd0e-7dc1ea156327
+status: experimental
+description: Detects firewall connection events to the contributor-supplied LegionLoader-associated destination IP, including allowed and blocked events. Matches any port or direction. Inspect the action and connection outcome; a match does not establish infection or successful C2 communication.
+references:
+  - https://www.esentire.com/blog/romulus-clickfix-to-legionloader-and-warden-stealer-breaking-down-a-multi-stage-malware-intrusion
+author: Subhash Popuri (@pbssubhash)
+date: '2026-11-23'
+logsource:
+  category: firewall
+detection:
+  selection:
+    DestinationIp: '109.238.86.137'
+  condition: selection
+fields:
+  - SourceIp
+  - DestinationIp
+  - DestinationPort
+  - Action
+falsepositives:
+  - Authorized malware analysis or security testing
+  - Shared or reassigned infrastructure
+level: medium
